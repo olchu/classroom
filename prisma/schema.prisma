@@ -1,6 +1,5 @@
 generator client {
-  provider = "prisma-client-js"
-  previewFeatures= ["createMany"]
+  provider        = "prisma-client-js"
 }
 
 datasource db {
@@ -8,21 +7,9 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model cruises {
-  exId       Int      @unique
-  loadFrom   String   @db.VarChar(255)
-  dateStart  String   @db.VarChar(255)
-  dateEnd    String   @db.VarChar(255)
-  cityStart  String   @db.VarChar(255)
-  cityEnd    String   @db.VarChar(255)
-  days       Int
-  title      String   @db.Text
-  shortRoute String   @db.Text
-  route      String   @db.Text
-  shipId     Int
-  shipName   String   @db.VarChar(255)
-  id         Int      @unique @default(autoincrement())
-  created_at DateTime @default(now()) @db.Timestamp(0)
-
-  @@id([id, exId])
+model student {
+  id          Int      @id @default(autoincrement())
+  first_name  String   @db.VarChar(255)
+  second_name String   @db.VarChar(255)
+  dob         DateTime @db.Date
 }
