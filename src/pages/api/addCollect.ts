@@ -7,14 +7,12 @@ export default async function handler(
   res: NextApiResponse
 ) {
   try {
-    const querySelect = await prisma.student.findMany({
-      orderBy: [
-        {
-          secondName: 'asc',
-        },
-      ],
+    console.log(req.body);
+    await prisma.collecting.create({
+      data: req.body,
     });
-    return res.status(200).json(querySelect);
+
+    return res.status(200).json(req.body);
   } catch (error) {
     return res.status(500).json(error);
   }

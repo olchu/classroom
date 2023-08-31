@@ -13,3 +13,19 @@ model student {
   secondName String   @db.VarChar(255)
   dob        DateTime @db.Date
 }
+
+model collecting {
+  id          Int     @id @default(autoincrement())
+  sum         Int
+  title       String  @db.VarChar(255)
+  description String? @db.VarChar(255)
+}
+
+model transIn {
+  id          Int       @id @default(autoincrement())
+  studentId   Int
+  collectId   Int
+  sum         Float     @db.Float
+  description String?   @db.VarChar(255)
+  date        DateTime? @db.DateTime(0)
+}
