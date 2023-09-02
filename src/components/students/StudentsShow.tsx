@@ -1,3 +1,4 @@
+import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 
 type studentTypes = {
@@ -17,6 +18,9 @@ export const StudentsShow = () => {
     setStudents(students);
   };
 
+  const session = useSession();
+  console.log('session', session);
+
   useEffect(() => {
     fetchStudents().catch((error) => console.log(error));
   }, []);
@@ -28,7 +32,9 @@ export const StudentsShow = () => {
         {students &&
           students?.map(({ firstName, secondName, id, dob }) => {
             const dateFromDob = new Date(dob);
-            const dobStr = `${dateFromDob.getDate()}.${dateFromDob.getMonth()+1}.${dateFromDob.getFullYear()}`;
+            const dobStr = `${dateFromDob.getDate()}.${
+              dateFromDob.getMonth() + 1
+            }.${dateFromDob.getFullYear()}`;
             return (
               <li key={id}>
                 {firstName} {secondName} {dobStr}
