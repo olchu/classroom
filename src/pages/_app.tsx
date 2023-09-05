@@ -1,24 +1,28 @@
-import { ReactElement } from 'react';
-import type { AppProps } from 'next/app';
-import PageWithLayoutType from '@/types/pageWithLayouts';
 import { SessionProvider } from 'next-auth/react';
+import type { ReactElement, ReactNode } from 'react';
+import type { NextPage } from 'next';
+import type { AppProps } from 'next/app';
+import { ProtectedRoute } from '@/middleware/auth';
 
-type AppLayoutProps = AppProps & {
-  Component: PageWithLayoutType;
-  pageProps: any;
+export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
+  getLayout?: (page: ReactElement) => ReactNode;
 };
-function MyApp({
+
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout;
+};
+
+export default function MyApp({
   Component,
   pageProps: { session, ...pageProps },
-}: AppLayoutProps) {
-  const Layout =
-    Component.layout || ((children: ReactElement) => <>{children}</>);
-  return (
+}: AppPropsWithLayout) {
+  const getLayout = Component.getLayout ?? ((page) => page);
+
+  return getLayout(
     <SessionProvider session={session}>
-      <Layout>
+      <ProtectedRoute>
         <Component {...pageProps} />
-      </Layout>
+      </ProtectedRoute>
     </SessionProvider>
   );
 }
-export default MyApp;
