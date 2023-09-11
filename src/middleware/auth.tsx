@@ -1,12 +1,12 @@
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import { ReactNode, useEffect, useLayoutEffect } from 'react';
+import { ReactNode, useLayoutEffect } from 'react';
 
 type ProtectedRouteProps = {
   children: ReactNode;
 };
 
-export const useAuthMiddleware = () => {
+export const useAuth = () => {
   const { data: session, status } = useSession();
   const router = useRouter();
 
@@ -25,7 +25,7 @@ export const useAuthMiddleware = () => {
 };
 
 export const ProtectedRoute = ({ children }: { children: ReactNode }) => {
-  const { session } = useAuthMiddleware();
+  const { session } = useAuth();
 
   return session && <>{children}</>;
 };
