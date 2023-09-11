@@ -3,12 +3,28 @@ import MainLayout from '@/components/layouts/main';
 import { GetStaticProps } from 'next';
 import prisma from 'prisma/client';
 
-const AddCollect = ({ data }: { data: any }) => {
-  console.log(data.students);
+export interface StudentsType {
+  id: number;
+  firstName: string;
+  secondName: string;
+  dob: Date;
+}
+export interface CollectingType {
+  id: number;
+  sum: number;
+  title: string;
+  description: string;
+}
+export interface AddIncomingProps {
+  students: StudentsType[];
+  collect: CollectingType[];
+}
+
+const AddCollect = ({ data }: { data: AddIncomingProps }) => {
   console.log(data.collect);
   return (
     <div>
-      <AddIncomingForm data={data}/>
+      <AddIncomingForm data={data} />
     </div>
   );
 };

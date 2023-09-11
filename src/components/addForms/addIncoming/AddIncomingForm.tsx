@@ -1,3 +1,4 @@
+import { AddIncomingProps } from '@/pages/addIncoming';
 import { useFormik } from 'formik';
 import { useEffect } from 'react';
 
@@ -23,7 +24,7 @@ const submit = (val: AddCollect, callback: () => void) => {
     });
 };
 
-export const AddIncomingForm = ({ data }: { data: any }) => {
+export const AddIncomingForm = ({ data }: { data: AddIncomingProps }) => {
   const { students, collect } = data;
 
   const {
