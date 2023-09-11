@@ -49,5 +49,5 @@ export const getStaticProps: GetStaticProps<{
 
   const collect = JSON.parse(JSON.stringify(collectSelect));
 
-  return { props: { data: { students, collect } } };
+  return { props: { data: { students:students ||[], collect: collect || []} } };
 };

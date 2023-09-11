@@ -13,13 +13,15 @@ export const StudentsShow = () => {
 
   const fetchStudents = async () => {
     const response = await fetch('/api/getStudents');
-    const students = await response.json();
+    console.log('response',response);
+    const students =response.ok && await response.json();
     console.log(students);
     setStudents(students);
   };
 
   const session = useSession();
   console.log('session', session);
+  console.log('students', students);
 
   useEffect(() => {
     fetchStudents().catch((error) => console.log(error));
