@@ -1,4 +1,6 @@
-import Link from 'next/link';
+import { Box, Button, ChakraProvider, HStack, Stack, textDecoration } from '@chakra-ui/react';
+import NextLink from 'next/link';
+import { Link } from '@chakra-ui/react';
 
 const menuList = [
   { title: 'Главная', link: '/' },
@@ -8,16 +10,14 @@ const menuList = [
 
 export const Menu = () => {
   return (
-    <div>
-      <ul>
-        {menuList.map(({ title, link }) => {
-          return (
-            <li key={title}>
-              <Link href={link}>{title}</Link>
-            </li>
-          );
-        })}
-      </ul>
-    </div>
+    <HStack bg="gray.300" p={4} spacing={8}>
+      {menuList.map(({ title, link }) => {
+        return (
+          <Link as={NextLink} key={title} href={link} >
+            {title}
+          </Link>
+        );
+      })}
+    </HStack>
   );
 };

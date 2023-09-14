@@ -2,6 +2,7 @@ import { AddIncomingForm } from '@/components/addForms/addIncoming/AddIncomingFo
 import MainLayout from '@/components/layouts/main';
 import { GetStaticProps } from 'next';
 import prisma from 'prisma/client';
+import { ReactElement } from 'react';
 
 export interface StudentsType {
   id: number;
@@ -29,7 +30,9 @@ const AddCollect = ({ data }: { data: AddIncomingProps }) => {
   );
 };
 
-AddCollect.layout = MainLayout;
+AddCollect.getLayout = function getLayout(page: ReactElement) {
+  return <MainLayout>{page}</MainLayout>;
+};
 export default AddCollect;
 
 export const getStaticProps: GetStaticProps<{

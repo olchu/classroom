@@ -1,6 +1,16 @@
 import { AddIncomingProps } from '@/pages/addIncoming';
+import {
+  Button,
+  FormControl,
+  FormLabel,
+  Heading,
+  Input,
+  Select,
+  Stack,
+  Textarea,
+} from '@chakra-ui/react';
 import { useFormik } from 'formik';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 
 interface AddCollect {
   studentId: number;
@@ -10,7 +20,6 @@ interface AddCollect {
 }
 
 const submit = (val: AddCollect, callback: () => void) => {
-  console.log(val);
   fetch('/api/addIncoming', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -58,53 +67,70 @@ export const AddIncomingForm = ({ data }: { data: AddIncomingProps }) => {
     }
   }, [values.collectId]);
 
+  const isDisabled = useMemo(() => {
+    return values.collectId == 0 || values.studentId == 0;
+  }, [values.collectId, values.studentId]);
+
   return (
-    <div>
-      <h2>Добавление прихода денег</h2>
+    <>
+      <Heading size={'md'} my={6}>
+        Добавление прихода денег
+      </Heading>
       <form onSubmit={handleSubmit}>
-        <label>
-          Ученик
-          <select name="studentId" onChange={handleSelectChange}>
-            <option key={0} value={0}></option>
-            {students &&
-              students?.map((item) => (
-                <option key={item.id} value={item.id}>
-                  {item.secondName} {item.firstName}
-                </option>
-              ))}
-          </select>
-        </label>
-        <label>
-          Сбор
-          <select name="collectId" onChange={handleSelectChange}>
-            <option key={0} value={0}></option>
-            {collect &&
-              collect?.map((item) => (
-                <option key={item.id} value={item.id}>
-                  {item.title}
-                </option>
-              ))}
-          </select>
-        </label>
-        <label>
-          Сумма
-          <input
-            type="number"
-            name="sum"
-            value={values.sum}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          Описание
-          <textarea
-            name="description"
-            value={values.description}
-            onChange={handleChange}
-          />
-        </label>
-        <button type="submit">Добавить</button>
+        <Stack spacing={4}>
+          <FormControl>
+            <FormLabel>Ученик</FormLabel>
+            <Select
+              placeholder="Выбрать ученика"
+              name="studentId"
+              onChange={handleSelectChange}
+            >
+              {students &&
+                students?.map((item) => (
+                  <option key={item.id} value={item.id}>
+                    {item.secondName} {item.firstName}
+                  </option>
+                ))}
+            </Select>
+          </FormControl>
+          <FormControl>
+            <FormLabel>Сбор</FormLabel>
+            <Select
+              placeholder="Выбрать сбор"
+              name="collectId"
+              onChange={handleSelectChange}
+            >
+              {collect &&
+                collect?.map((item) => (
+                  <option key={item.id} value={item.id}>
+                    {item.title}
+                  </option>
+                ))}
+            </Select>
+          </FormControl>
+          <FormControl>
+            <FormLabel>Сумма</FormLabel>
+            <Input
+              type="number"
+              name="sum"
+              value={values.sum}
+              onChange={handleChange}
+            />
+          </FormControl>
+          <FormControl>
+            <FormLabel>Описание</FormLabel>
+            <Textarea
+              name="description"
+              value={values.description}
+              onChange={handleChange}
+            />
+          </FormControl>
+
+          <Button colorScheme="green" type="submit" isDisabled={isDisabled}>
+            Добавить
+          </Button>
+        </Stack>
       </form>
-    </div>
+    </>
   );
 };
