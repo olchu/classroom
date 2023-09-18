@@ -1,4 +1,4 @@
-import { Box, Heading } from '@chakra-ui/react';
+import { Box, Center, Heading } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import {
   Table,
@@ -34,15 +34,18 @@ export const StudentsShow = () => {
   }, []);
 
   return (
-    <Box py={1}>
+    <Box py={1} >
       <Heading mb={2}>Ученики:</Heading>
 
-      <TableContainer>
+      <TableContainer overflow="hidden">
         <Table variant="striped" colorScheme="gray" size="sm">
           <Thead>
             <Tr>
+              <Th>№</Th>
               <Th>Ученик</Th>
-              <Th>Дата рождения</Th>
+              <Th>
+                <Center>Дата рождения</Center>
+              </Th>
             </Tr>
           </Thead>
           <Tbody>
@@ -54,10 +57,13 @@ export const StudentsShow = () => {
                 }.${dateFromDob.getFullYear()}`;
                 return (
                   <Tr key={id}>
+                    <Td>{id}</Td>
                     <Td>
-                      {firstName} {secondName}
+                      {secondName} {firstName}
                     </Td>
-                    <Td> {dobStr}</Td>
+                    <Td>
+                      <Center>{dobStr}</Center>
+                    </Td>
                   </Tr>
                 );
               })}
