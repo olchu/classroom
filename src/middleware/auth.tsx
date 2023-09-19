@@ -1,6 +1,6 @@
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import { ReactNode, useLayoutEffect } from 'react';
+import { ReactNode, useEffect } from 'react';
 
 type ProtectedRouteProps = {
   children: ReactNode;
@@ -10,7 +10,7 @@ export const useAuth = () => {
   const { data: session, status } = useSession();
   const router = useRouter();
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (status === 'loading') {
       // Session is still loading, do nothing
       return;
@@ -19,6 +19,10 @@ export const useAuth = () => {
     if (!session) {
       // User is not authenticated, redirect to the login page
       router.push('/api/auth/signin');
+    }
+
+    if (session) {
+      console.log('session', session);
     }
   }, [session, status, router]);
   return { session };

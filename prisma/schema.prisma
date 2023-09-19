@@ -27,5 +27,11 @@ model transIn {
   collectId   Int
   sum         Float     @db.Float
   description String?   @db.VarChar(255)
-  date        DateTime? @db.DateTime(0)
+  date        DateTime? @db.Timestamp(0)
+}
+
+model users {
+  id         Int    @id @default(autoincrement())
+  email      String @db.VarChar(255)
+  permitions String @db.VarChar(255)
 }

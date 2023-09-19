@@ -1,6 +1,7 @@
-import NextAuth from 'next-auth';
+import NextAuth, { NextAuthOptions, Session } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 import YandexProvider from 'next-auth/providers/yandex';
+import prisma from 'prisma/client';
 export const authOptions = {
   // Configure one or more authentication providers
   providers: [
@@ -13,5 +14,27 @@ export const authOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     }),
   ],
+  callbacks: {
+    async session({ session }: { session: Session & { isAdmin: boolean } }) {
+      const users = await prisma.users.findMany();
+      const adminUsers = users
+        .filter((user) => user.permitions === 'rw')
+        .map((user) => user.email);
+      if (adminUsers.includes(session.user?.email || '')) {
+        session.isAdmin = true;
+        return session;
+      } else {
+        return false;
+      }
+    },
+    async redirect(prop) {
+      // Allows relative callback URLs
+      console.log('!!!!!!!!!   prop   !!!!!!    ', prop);
+      // if (url.startsWith('/')) return `${baseUrl}${url}`;
+      // // Allows callback URLs on the same origin
+      // else if (new URL(url).origin === baseUrl) return url;
+      return prop.baseUrl;
+    },
+  },
 };
-export default NextAuth(authOptions);
+export default NextAuth(authOptions as NextAuthOptions);
