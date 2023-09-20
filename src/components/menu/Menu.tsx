@@ -2,6 +2,7 @@ import { Button, HStack, Spacer } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import { Link } from '@chakra-ui/react';
 import { signOut, useSession } from 'next-auth/react';
+import { useGetSession } from '@/hooks/useGetSession';
 
 const menuList = [
   { title: 'Главная', link: '/', onlyAdmins: false },
@@ -11,12 +12,12 @@ const menuList = [
 ];
 
 export const Menu = () => {
-  const { data } = useSession();
+  const { isAdmin } = useGetSession();
   return (
     <HStack bg="gray.300" px={4} py={2} spacing={8} alignItems="center">
       {menuList.map(({ title, link, onlyAdmins }) => {
         return (
-          ((onlyAdmins && data.isAdmin) || !onlyAdmins) && (
+          ((onlyAdmins && isAdmin) || !onlyAdmins) && (
             <Link as={NextLink} key={title} href={link}>
               {title}
             </Link>

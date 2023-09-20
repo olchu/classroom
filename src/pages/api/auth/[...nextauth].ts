@@ -1,8 +1,11 @@
 import NextAuth, { NextAuthOptions, Session } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 import YandexProvider from 'next-auth/providers/yandex';
-import { redirect } from 'next/dist/server/api-utils';
 import prisma from 'prisma/client';
+
+
+
+
 export const authOptions = {
   // Configure one or more authentication providers
   providers: [
@@ -30,4 +33,5 @@ export const authOptions = {
     },
   },
 };
-export default NextAuth(authOptions as NextAuthOptions);
+ 
+export default NextAuth(authOptions as unknown as  NextAuthOptions);
