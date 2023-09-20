@@ -30,6 +30,13 @@ export default function Document() {
       <body>
         <Main />
         <NextScript />
+        <style jsx global>{`
+          html,
+          body,
+          #__next {
+            height: 100%;
+          }
+        `}</style>
       </body>
     </Html>
   );

@@ -20,16 +20,12 @@ export const useAuth = () => {
       // User is not authenticated, redirect to the login page
       router.push('/api/auth/signin');
     }
-
-    if (session) {
-      console.log('session', session);
-    }
   }, [session, status, router]);
   return { session };
 };
 
 export const ProtectedRoute = ({ children }: { children: ReactNode }) => {
-  const { session} = useAuth();
+  const { session } = useAuth();
 
   return session && <>{children}</>;
 };

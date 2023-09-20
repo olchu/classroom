@@ -1,14 +1,9 @@
 import type { ReactElement } from 'react';
 import type { NextPageWithLayout } from './_app';
 import MainLayout from '@/components/layouts/main';
-import { StudentsShow } from '@/components/students/StudentsShow';
 
 const Page: NextPageWithLayout = () => {
-  return (
-    <>
-      <StudentsShow />
-    </>
-  );
+  return <>hello</>;
 };
 
 Page.getLayout = function getLayout(page: ReactElement) {
