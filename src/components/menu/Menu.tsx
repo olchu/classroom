@@ -1,23 +1,26 @@
 import { Button, HStack, Spacer } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import { Link } from '@chakra-ui/react';
-import { signOut } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 
 const menuList = [
-  { title: 'Главная', link: '/' },
-  { title: 'Добавить сбор', link: '/addCollect' },
-  { title: 'Добавить входящее', link: '/addIncoming' },
-  { title: 'Ученики', link: '/students' },
+  { title: 'Главная', link: '/', onlyAdmins: false },
+  { title: 'Добавить сбор', link: '/addCollect', onlyAdmins: true },
+  { title: 'Добавить входящее', link: '/addIncoming', onlyAdmins: true },
+  { title: 'Ученики', link: '/students', onlyAdmins: true },
 ];
 
 export const Menu = () => {
+  const { data } = useSession();
   return (
-    <HStack bg="gray.300" p={4} spacing={8}>
-      {menuList.map(({ title, link }) => {
+    <HStack bg="gray.300" px={4} py={2} spacing={8} alignItems="center">
+      {menuList.map(({ title, link, onlyAdmins }) => {
         return (
-          <Link as={NextLink} key={title} href={link}>
-            {title}
-          </Link>
+          ((onlyAdmins && data.isAdmin) || !onlyAdmins) && (
+            <Link as={NextLink} key={title} href={link}>
+              {title}
+            </Link>
+          )
         );
       })}
       <Spacer />

@@ -17,11 +17,9 @@ export default function MyApp({
 }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page) => page);
 
-  return getLayout(
+  return (
     <SessionProvider session={session}>
-      <ProtectedRoute>
-        <Component {...pageProps} />
-      </ProtectedRoute>
+      <ProtectedRoute>{getLayout(<Component {...pageProps} />)}</ProtectedRoute>
     </SessionProvider>
   );
 }

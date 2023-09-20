@@ -1,6 +1,7 @@
 import NextAuth, { NextAuthOptions, Session } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 import YandexProvider from 'next-auth/providers/yandex';
+import { redirect } from 'next/dist/server/api-utils';
 import prisma from 'prisma/client';
 export const authOptions = {
   // Configure one or more authentication providers
@@ -24,16 +25,8 @@ export const authOptions = {
         session.isAdmin = true;
         return session;
       } else {
-        return false;
+        return session;
       }
-    },
-    async redirect(prop) {
-      // Allows relative callback URLs
-      console.log('!!!!!!!!!   prop   !!!!!!    ', prop);
-      // if (url.startsWith('/')) return `${baseUrl}${url}`;
-      // // Allows callback URLs on the same origin
-      // else if (new URL(url).origin === baseUrl) return url;
-      return prop.baseUrl;
     },
   },
 };
