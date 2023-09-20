@@ -5,8 +5,10 @@ import { Box, ChakraProvider } from '@chakra-ui/react';
 const MainLayout: LayoutProps = ({ children }) => {
   return (
     <ChakraProvider>
-      <Menu />
-      <Box px={2}>{children}</Box>
+      <Box overflow="hidden" overflowY="auto" minWidth="390px">
+        <Menu />
+        <Box px={2}>{children}</Box>
+      </Box>
     </ChakraProvider>
   );
 };
