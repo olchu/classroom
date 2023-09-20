@@ -5,15 +5,7 @@ import { signOut, useSession } from 'next-auth/react';
 import { useGetSession } from '@/hooks/useGetSession';
 import { useMedia } from '@/hooks/useMedia';
 import { MobileMenu } from './MobileMenu';
-
-const menuList = [
-  { title: 'Главная', link: '/', onlyAdmins: false },
-  { title: 'Добавить сбор', link: '/addCollect', onlyAdmins: true },
-  { title: 'Добавить входящее', link: '/addIncoming', onlyAdmins: true },
-  { title: 'Ученики', link: '/students', onlyAdmins: true },
-];
-
-export type MenuType = typeof menuList;
+import { menuList } from './menuList';
 
 export const Menu = () => {
   const { isAdmin } = useGetSession();
@@ -36,18 +28,20 @@ export const Menu = () => {
       {isMobile ? (
         <MobileMenu menu={menu} />
       ) : (
-        menu.map(({ title, link }) => {
-          return (
-            <Link as={NextLink} key={title} href={link}>
-              {title}
-            </Link>
-          );
-        })
+        <>
+          {menu.map(({ title, link }) => {
+            return (
+              <Link as={NextLink} key={title} href={link}>
+                {title}
+              </Link>
+            );
+          })}
+          <Spacer />
+          <Button onClick={() => signOut()} variant="ghost" color="brown">
+            Logout
+          </Button>
+        </>
       )}
-      <Spacer />
-      <Button onClick={() => signOut()} variant="ghost" color="brown">
-        Logout
-      </Button>
     </HStack>
   );
 };

@@ -1,20 +1,15 @@
 import {
-  Box,
-  Button,
-  Fade,
-  Flex,
-  Link,
-  Slide,
-  Spacer,
-  Stack,
-  VStack,
+    Box,
+    Button, Link, Spacer,
+    Stack,
+    VStack
 } from '@chakra-ui/react';
 import { useState } from 'react';
-import { MenuType } from './Menu';
 import { RxHamburgerMenu, RxCross1 } from 'react-icons/rx';
 import { useBodyLockScroll } from '@/hooks/useBodyLockScroll';
 import NextLink from 'next/link';
-import { signOut, useSession } from 'next-auth/react';
+import { signOut } from 'next-auth/react';
+import { MenuType } from './menuList';
 
 export const MobileMenu = ({ menu }: { menu: MenuType }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -39,7 +34,7 @@ export const MobileMenu = ({ menu }: { menu: MenuType }) => {
           zIndex="100"
           onClick={() => setIsOpen(!isOpen)}
         >
-          <Stack height="100vh" width="70vw" bg="white" overflowY="auto" p={4}>
+          <Stack height="100vh" width="60vw" bg="white" overflowY="auto" p={4}>
             <Box onClick={() => setIsOpen(!isOpen)} p="2" alignSelf="flex-end">
               <RxCross1 />
             </Box>
