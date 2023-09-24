@@ -15,18 +15,26 @@ export interface TransInType {
   id: number;
   sum: number;
   title: string;
+  studentId: number;
+  collectId: number;
+}
+export interface CollectingType {
+  id: number;
+  sum: number;
+  title: string;
   description: string;
 }
 export interface AddIncomingProps {
   students: StudentsType[];
-  collect: TransInType[];
+  transIn: TransInType[];
+  collect: CollectingType[];
 }
 
 const Page = ({ data }: { data: AddIncomingProps }) => {
   console.log('data', data);
   return (
     <>
-      <Delivery />
+      <Delivery data={data} />
     </>
   );
 };
@@ -44,8 +52,17 @@ export const getStaticProps: GetStaticProps<{
   const studentsSelect = await prisma.student.findMany();
   const students = JSON.parse(JSON.stringify(studentsSelect));
 
+  const collectSelect = await prisma.collecting.findMany();
+  const collect = JSON.parse(JSON.stringify(collectSelect));
+
   return {
-    props: { data: { students: students || [], transIn: transIn || [] } },
+    props: {
+      data: {
+        students: students || [],
+        transIn: transIn || [],
+        collect: collect || [],
+      },
+    },
   };
 };
 
